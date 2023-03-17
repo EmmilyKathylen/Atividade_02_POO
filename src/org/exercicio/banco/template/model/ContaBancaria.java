@@ -2,9 +2,9 @@ package org.exercicio.banco.template.model;
 
 /**
 *
-* Nome:
-* Curso:
-* Matrícula:
+* Nome:Emmily kathylen de souza brito 
+* Curso:IPI- 2° periodo 
+* Matrícula: 20222INFIG0248
 * 
 */
 public class ContaBancaria {
@@ -46,6 +46,12 @@ public class ContaBancaria {
 	 */
 	public void depositar(double valor) {
 		
+		if (valor > 0) {
+			this.saldo = this.saldo + valor;
+		} else {
+			System.out.print("Valor invalido para deposito.");
+		}
+		
 	}
 
 	/**
@@ -62,6 +68,19 @@ public class ContaBancaria {
 	 */
 	public void sacar(double valor) {
 		
+		if (!this.status) {
+			System.out.print("Conta inativa.");
+			return;
+		}
+		if (valor <= 0) {
+			System.out.print("Valor inválido para saque.");
+			return;
+		}
+		if (valor > this.saldo) {
+			System.out.print("Saldo insuficiente.");
+			return;
+		}
+		this.saldo = this.saldo - valor;
 	}
 
 	/**
@@ -74,6 +93,15 @@ public class ContaBancaria {
 	 */
 	public void fecharConta() {
 		
+		if(!status) {
+			System.out.print("Conta ja inativa.");
+			return;
+		}
+		if (this.saldo > 0) {
+			System.out.print("Conta com saldo. Nao eh possivel fecha-la.");
+			return;
+		}
+		this.status = false;
 	}
 
 	/**
@@ -82,6 +110,12 @@ public class ContaBancaria {
 	 * ativa." deve ser exibida no console. Utilize System.out.print();
 	 */
 	public void reabrirConta() {
+		
+		if (status) {
+			System.out.print("Conta já ativa.");
+		} else {
+			this.status = true;
+		}
 		
 	}
 
@@ -100,7 +134,22 @@ public class ContaBancaria {
 	 * @param destino
 	 */
 	public void realizarTransferencia(double quantia, ContaBancaria destino) {
-
+		
+		if (!this.status) {
+			System.out.print("Conta de origem inativa.");
+			return;
+		}
+		if (!destino.status) {
+			System.out.print("Conta de destino inativa.");
+			return;
+		}
+		if (this.saldo < quantia) {
+			System.out.print("Saldo insuficiente para transferencia.");
+			return;
+		}
+		
+		this.saldo -= quantia;
+		destino.saldo =+ quantia;
 	}
 
 	public int getNumeroConta() {
